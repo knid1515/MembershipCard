@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โปรแกรมทำบัตรสมาชิก</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas for capturing the card as an image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Google Fonts: Kanit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Use Kanit font as the default font */
+        body {
+            font-family: 'Kanit', sans-serif;
+        }
+        /* Custom styles for the card to match the image */
+        .card-container {
+            width: 350px;
+            height: 550px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col lg:flex-row items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8">
+
+    <!-- Form Section for User Input -->
+    <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg mb-8 lg:mb-0 lg:mr-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">สร้างบัตรสมาชิก</h1>
+        <div class="space-y-4">
+            <div>
+                <label for="nameInput" class="block text-sm font-medium text-gray-700">ชื่อ:</label>
+                <input type="text" id="nameInput" placeholder="เช่น เอกเขนก" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+            <div>
+                <label for="titleInput" class="block text-sm font-medium text-gray-700">ตำแหน่ง:</label>
+                <input type="text" id="titleInput" value="ผู้ประสานงานกิจกรรม" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+            <div>
+                <label for="imageInput" class="block text-sm font-medium text-gray-700">รูปโปรไฟล์:</label>
+                <input type="file" id="imageInput" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100">
+            </div>
+        </div>
+        <button id="downloadBtn" class="mt-8 w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300">
+            ดาวน์โหลดบัตร
+        </button>
+    </div>
+
+    <!-- Membership Card Preview Section -->
+    <div class="card-container" id="membership-card-container">
+        <div class="relative bg-white rounded-2xl w-full h-full overflow-hidden">
+            <!-- Background Color Shapes -->
+            <div class="absolute bottom-0 left-0 w-full h-[65%] bg-[#0077c8]"></div>
+            <div class="absolute bottom-0 left-0 w-[150%] h-[350px] bg-[#fecb00] rounded-[50%] -bottom-[180px] -left-[100px] z-10"></div>
+            <div class="absolute bottom-0 right-0 w-[120%] h-[350px] bg-[#005a9e] rounded-[50%] -bottom-[200px] -right-[150px] z-20"></div>
+
+            <!-- Card Content -->
+            <div class="relative w-full h-full z-30 p-5 flex flex-col">
+                <!-- Header -->
+                <header class="flex items-center justify-between">
+                    <img src="https://placehold.co/50x50/e2e8f0/e2e8f0?text=Logo" alt="Logo 1" class="w-12 h-12 rounded-full bg-white p-1">
+                    <div class="text-center text-gray-800">
+                        <p class="font-bold text-xl">กลุ่มคาราวาน</p>
+                        <p class="text-xs font-medium">โรงเรียนยิ้ม สมุทรปราการ</p>
+                        <p class="text-xs font-medium">Smile School Caravan</p>
+                    </div>
+                    <img src="https://placehold.co/50x50/e2e8f0/e2e8f0?text=Logo" alt="Logo 2" class="w-12 h-12 rounded-full bg-white p-1">
+                </header>
+
+                <!-- Profile Picture -->
+                <div class="flex-grow flex items-center justify-center py-4">
+                    <div class="w-56 h-56 rounded-md bg-gray-200 border-4 border-white shadow-lg overflow-hidden">
+                        <img id="profileImage" src="https://storage.googleapis.com/fastwork-static/8e6211d2-526f-4649-a767-5bf4b9201cd6.jpg" class="w-full h-full object-cover" alt="Profile Picture">
+                    </div>
+                </div>
+
+                <!-- Member Info -->
+                <div class="text-center text-white pb-5">
+                    <h2 id="cardName" class="text-4xl font-bold">ชื่อ-สกุล</h2>
+                    <p id="cardTitle" class="text-lg font-medium">ตำแหน่ง</p>
+                </div>
+
+                <!-- Footer -->
+                <footer class="bg-white/90 backdrop-blur-sm rounded-lg p-2 flex items-center justify-center -mx-2 -mb-2 shadow-inner">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[#1877F2] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.494v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.294h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.323-1.325z"/></svg>
+                    <p class="text-xs text-gray-700 font-semibold">กลุ่มคาราวานโรงเรียนยิ้ม (สมุทรปราการ)</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const nameInput = document.getElementById('nameInput');
+        const titleInput = document.getElementById('titleInput');
+        const imageInput = document.getElementById('imageInput');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        const cardName = document.getElementById('cardName');
+        const cardTitle = document.getElementById('cardTitle');
+        const profileImage = document.getElementById('profileImage');
+        const cardContainer = document.getElementById('membership-card-container');
+
+        // Update card name in real-time
+        nameInput.addEventListener('keyup', (e) => {
+            cardName.textContent = e.target.value || 'ชื่อ-สกุล';
+        });
+
+        // Update card title in real-time
+        titleInput.addEventListener('keyup', (e) => {
+            cardTitle.textContent = e.target.value || 'ตำแหน่ง';
+        });
+
+        // Update profile picture on file selection
+        imageInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    profileImage.src = event.target.result;
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        // Download card as a PNG image
+        downloadBtn.addEventListener('click', () => {
+            // Use html2canvas to capture the card element
+            html2canvas(cardContainer, { 
+                useCORS: true, // This can help with loading external images
+                scale: 2 // Increase scale for better resolution
+            }).then(canvas => {
+                // Create a link element to trigger the download
+                const link = document.createElement('a');
+                link.download = `membership-card-${nameInput.value || 'member'}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
+
