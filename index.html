@@ -98,9 +98,9 @@
                     </div>
 
                     <!-- Member Info -->
-                    <div id="memberInfo" class="text-center text-white pb-5">
-                        <h2 id="cardName" class="text-4xl font-bold">ชื่อ-สกุล</h2>
-                        <p id="cardPosition" class="text-lg font-medium">ผู้ประสานงานกิจกรรม</p>
+                    <div id="memberInfo" class="text-center pb-5">
+                        <h2 id="cardName" class="text-4xl font-bold" style="text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">ชื่อ-สกุล</h2>
+                        <p id="cardPosition" class="text-lg font-medium" style="text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">ผู้ประสานงานกิจกรรม</p>
                     </div>
 
                     <!-- Footer -->
@@ -173,6 +173,13 @@
                          </label>
                          <input type="file" id="bgImageInput" accept="image/*" class="hidden">
                          
+                         <div class="mt-3 hidden" id="textColorToggleContainer">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="checkbox" id="useLightTextColor" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                <span class="text-gray-700 text-sm">ใช้ตัวอักษรสีอ่อน (สำหรับพื้นหลังสีเข้ม)</span>
+                            </label>
+                        </div>
+
                          <div class="flex items-center justify-between mt-3">
                              <p class="text-sm text-gray-500">หรือใช้พื้นหลังสี:</p>
                              <button id="resetBgBtn" class="text-sm text-indigo-500 hover:underline font-semibold">กลับไปใช้พื้นหลังสี</button>
@@ -237,6 +244,8 @@
         const bgColor3 = document.getElementById('bgColor3');
         const bgImageInput = document.getElementById('bgImageInput');
         const resetBgBtn = document.getElementById('resetBgBtn');
+        const textColorToggleContainer = document.getElementById('textColorToggleContainer');
+        const useLightTextColor = document.getElementById('useLightTextColor');
 
         // --- Functions ---
         const openModal = (modal) => {
@@ -256,7 +265,8 @@
                 bgColor1: bgColor1.value,
                 bgColor2: bgColor2.value,
                 bgColor3: bgColor3.value,
-                bgImage: cardBgImage.classList.contains('hidden') ? null : cardBgImage.src
+                bgImage: cardBgImage.classList.contains('hidden') ? null : cardBgImage.src,
+                useLightTextColor: useLightTextColor.checked
             };
             localStorage.setItem('membershipCardSettings', JSON.stringify(settings));
         };
@@ -278,32 +288,49 @@
                 bgShape2.style.backgroundColor = bgColor2.value;
                 bgShape3.style.backgroundColor = bgColor3.value;
 
+                useLightTextColor.checked = settings.useLightTextColor || false;
+
                 if (settings.bgImage) {
                     setBgImageMode(settings.bgImage);
                 } else {
                     setBgColorMode();
                 }
+            } else {
+                // If no settings, apply default color mode
+                setBgColorMode();
+            }
+        };
+        
+        const applyTextColorForImageBg = () => {
+            if (useLightTextColor.checked) {
+                memberInfo.classList.add('text-white');
+                memberInfo.classList.remove('text-[#005a9e]');
+            } else {
+                memberInfo.classList.remove('text-white');
+                memberInfo.classList.add('text-[#005a9e]');
             }
         };
         
         const setBgColorMode = () => {
             cardBgImage.src = '';
             cardBgImage.classList.add('hidden');
+            textColorToggleContainer.classList.add('hidden');
             bgShape1.classList.remove('hidden');
             bgShape2.classList.remove('hidden');
             bgShape3.classList.remove('hidden');
-            memberInfo.classList.add('text-white');
-            memberInfo.classList.remove('text-gray-800');
+            // Set text color to dark blue for default background
+            memberInfo.classList.remove('text-white');
+            memberInfo.classList.add('text-[#005a9e]');
         };
         
         const setBgImageMode = (imageSrc) => {
             cardBgImage.src = imageSrc;
             cardBgImage.classList.remove('hidden');
+            textColorToggleContainer.classList.remove('hidden');
             bgShape1.classList.add('hidden');
             bgShape2.classList.add('hidden');
             bgShape3.classList.add('hidden');
-            memberInfo.classList.remove('text-white');
-            memberInfo.classList.add('text-gray-800');
+            applyTextColorForImageBg();
         };
 
         // --- Event Listeners ---
@@ -407,6 +434,11 @@
         
         resetBgBtn.addEventListener('click', () => {
             setBgColorMode();
+            saveSettings();
+        });
+
+        useLightTextColor.addEventListener('change', () => {
+            applyTextColorForImageBg();
             saveSettings();
         });
 
