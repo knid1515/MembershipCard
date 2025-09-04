@@ -23,97 +23,298 @@
             height: 550px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
+        .modal {
+            transition: opacity 0.25s ease;
+        }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col lg:flex-row items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8">
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8">
 
-    <!-- Form Section for User Input -->
-    <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg mb-8 lg:mb-0 lg:mr-8">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">สร้างบัตรสมาชิก</h1>
-        <div class="space-y-4">
-            <div>
-                <label for="nameInput" class="block text-sm font-medium text-gray-700">ชื่อ:</label>
-                <input type="text" id="nameInput" placeholder="เช่น เอกเขนก" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+    <main class="flex flex-col lg:flex-row items-center justify-center">
+        <!-- Form Section for User Input -->
+        <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg mb-8 lg:mb-0 lg:mr-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">สร้างบัตรสมาชิก</h1>
+            <div class="space-y-4">
+                <div>
+                    <label for="nameInput" class="block text-sm font-medium text-gray-700">ชื่อ:</label>
+                    <input type="text" id="nameInput" placeholder="เช่น เอกเขนก" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="positionInput" class="block text-sm font-medium text-gray-700">ตำแหน่ง:</label>
+                    <input type="text" id="positionInput" placeholder="เช่น ผู้ประสานงานกิจกรรม" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="imageInput" class="block text-sm font-medium text-gray-700">รูปโปรไฟล์:</label>
+                    <input type="file" id="imageInput" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100">
+                </div>
             </div>
-            <div>
-                <label for="titleInput" class="block text-sm font-medium text-gray-700">ตำแหน่ง:</label>
-                <input type="text" id="titleInput" value="ผู้ประสานงานกิจกรรม" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            </div>
-            <div>
-                <label for="imageInput" class="block text-sm font-medium text-gray-700">รูปโปรไฟล์:</label>
-                <input type="file" id="imageInput" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100">
+            <div class="mt-8 flex items-center space-x-2">
+                <button id="downloadBtn" title="ดาวน์โหลดบัตร" class="flex-grow bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                </button>
+                <button id="guideBtn" title="แนะนำการใช้งาน" class="flex-shrink-0 bg-gray-200 text-gray-700 p-3 rounded-lg hover:bg-gray-300 transition-colors duration-300 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </button>
+                <button id="settingsBtn" title="ตั้งค่า" class="flex-shrink-0 bg-gray-700 text-white p-3 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </button>
             </div>
         </div>
-        <button id="downloadBtn" class="mt-8 w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300">
-            ดาวน์โหลดบัตร
-        </button>
+
+        <!-- Membership Card Preview Section -->
+        <div class="card-container" id="membership-card-container">
+            <div class="relative bg-white rounded-2xl w-full h-full overflow-hidden">
+                <!-- Background Image -->
+                <img id="cardBgImage" src="" alt="Card Background" class="absolute inset-0 w-full h-full object-cover hidden z-0">
+
+                <!-- Background Color Shapes -->
+                <div id="bgShape1" class="absolute bottom-0 left-0 w-full h-[65%] bg-[#0077c8] z-10"></div>
+                <div id="bgShape2" class="absolute bottom-0 left-0 w-[150%] h-[350px] bg-[#fecb00] rounded-[50%] -bottom-[180px] -left-[100px] z-20"></div>
+                <div id="bgShape3" class="absolute bottom-0 right-0 w-[120%] h-[350px] bg-[#005a9e] rounded-[50%] -bottom-[200px] -right-[150px] z-30"></div>
+
+                <!-- Card Content -->
+                <div class="relative w-full h-full z-40 p-5 flex flex-col">
+                    <!-- Header -->
+                    <header class="flex items-center justify-center pt-2">
+                        <div class="text-center">
+                            <p id="groupName" class="font-bold text-3xl text-blue-600" style="text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">กลุ่มคาราวาน</p>
+                            <p id="groupSub1" class="text-xs font-medium text-gray-800">โรงเรียนยิ้ม สมุทรปราการ</p>
+                            <p id="groupSub2" class="text-xs font-medium text-gray-800">Smile School Caravan</p>
+                        </div>
+                    </header>
+
+                    <!-- Profile Picture -->
+                    <div class="flex-grow flex items-center justify-center py-4">
+                        <div class="w-56 h-56 rounded-md bg-gray-200 border-4 border-white shadow-lg overflow-hidden">
+                            <img id="profileImage" src="https://storage.googleapis.com/fastwork-static/8e6211d2-526f-4649-a767-5bf4b9201cd6.jpg" class="w-full h-full object-fill" alt="Profile Picture">
+                        </div>
+                    </div>
+
+                    <!-- Member Info -->
+                    <div id="memberInfo" class="text-center text-white pb-5">
+                        <h2 id="cardName" class="text-4xl font-bold">ชื่อ-สกุล</h2>
+                        <p id="cardPosition" class="text-lg font-medium">ผู้ประสานงานกิจกรรม</p>
+                    </div>
+
+                    <!-- Footer -->
+                    <footer class="bg-white/90 backdrop-blur-sm rounded-lg p-2 flex items-center justify-center -mx-2 -mb-2 shadow-inner">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[#1877F2] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.494v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.294h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.323-1.325z"/></svg>
+                        <p id="footerText" class="text-xs text-gray-700 font-semibold">กลุ่มคาราวานโรงเรียนยิ้ม (สมุทรปราการ)</p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center text-gray-500 text-xs py-4">
+        @2025 By กฤตัชญ์ วัฒนชาต ทัศนศร | สำนักตักศิลา
+    </footer>
+
+
+    <!-- Guide Modal -->
+    <div id="guideModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 pointer-events-none opacity-0">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg mx-4">
+            <h2 class="text-2xl font-bold mb-4">แนะนำการใช้งาน</h2>
+            <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                <li>กรอก <b>ชื่อ-สกุล</b> และ <b>ตำแหน่ง</b> ของสมาชิกในช่องที่กำหนด</li>
+                <li>คลิกที่ปุ่ม <b>"เลือกไฟล์"</b> เพื่ออัปโหลดรูปภาพประจำตัว</li>
+                <li>เมื่อบัตรสมาชิกแสดงผลถูกต้องตามต้องการแล้ว ให้คลิกปุ่มไอคอน <b>ดาวน์โหลด</b></li>
+                <li>ไฟล์ภาพบัตรสมาชิก .png จะถูกบันทึกลงในเครื่องของคุณ</li>
+            </ol>
+            <button id="closeGuideBtn" class="mt-6 w-full bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">ปิด</button>
+        </div>
     </div>
 
-    <!-- Membership Card Preview Section -->
-    <div class="card-container" id="membership-card-container">
-        <div class="relative bg-white rounded-2xl w-full h-full overflow-hidden">
-            <!-- Background Color Shapes -->
-            <div class="absolute bottom-0 left-0 w-full h-[65%] bg-[#0077c8]"></div>
-            <div class="absolute bottom-0 left-0 w-[150%] h-[350px] bg-[#fecb00] rounded-[50%] -bottom-[180px] -left-[100px] z-10"></div>
-            <div class="absolute bottom-0 right-0 w-[120%] h-[350px] bg-[#005a9e] rounded-[50%] -bottom-[200px] -right-[150px] z-20"></div>
-
-            <!-- Card Content -->
-            <div class="relative w-full h-full z-30 p-5 flex flex-col">
-                <!-- Header -->
-                <header class="flex items-center justify-between">
-                    <img src="https://placehold.co/50x50/e2e8f0/e2e8f0?text=Logo" alt="Logo 1" class="w-12 h-12 rounded-full bg-white p-1">
-                    <div class="text-center text-gray-800">
-                        <p class="font-bold text-xl">กลุ่มคาราวาน</p>
-                        <p class="text-xs font-medium">โรงเรียนยิ้ม สมุทรปราการ</p>
-                        <p class="text-xs font-medium">Smile School Caravan</p>
-                    </div>
-                    <img src="https://placehold.co/50x50/e2e8f0/e2e8f0?text=Logo" alt="Logo 2" class="w-12 h-12 rounded-full bg-white p-1">
-                </header>
-
-                <!-- Profile Picture -->
-                <div class="flex-grow flex items-center justify-center py-4">
-                    <div class="w-56 h-56 rounded-md bg-gray-200 border-4 border-white shadow-lg overflow-hidden">
-                        <img id="profileImage" src="https://storage.googleapis.com/fastwork-static/8e6211d2-526f-4649-a767-5bf4b9201cd6.jpg" class="w-full h-full object-cover" alt="Profile Picture">
-                    </div>
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 pointer-events-none opacity-0">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg mx-4">
+            <!-- Password Section -->
+            <div id="passwordSection">
+                <h2 class="text-2xl font-bold mb-4">กรุณาใส่รหัสผ่าน</h2>
+                <input type="password" id="passwordInput" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm">
+                <p id="passwordError" class="text-red-500 text-sm mt-1 hidden">รหัสผ่านไม่ถูกต้อง</p>
+                <div class="flex space-x-2 mt-4">
+                    <button id="submitPasswordBtn" class="w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700">ตกลง</button>
+                    <button id="closeSettingsBtn1" class="w-full bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">ยกเลิก</button>
                 </div>
+            </div>
+            <!-- Settings Form Section (hidden by default) -->
+            <div id="settingsFormSection" class="hidden">
+                 <h2 class="text-2xl font-bold mb-4">ตั้งค่าบัตร</h2>
+                 <div class="space-y-4">
+                    <div>
+                        <label for="groupNameInput" class="block text-sm font-medium text-gray-700">ชื่อกลุ่มหลัก:</label>
+                        <input type="text" id="groupNameInput" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+                    </div>
+                     <div>
+                        <label for="groupSub1Input" class="block text-sm font-medium text-gray-700">บรรทัดที่ 2:</label>
+                        <input type="text" id="groupSub1Input" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="groupSub2Input" class="block text-sm font-medium text-gray-700">บรรทัดที่ 3:</label>
+                        <input type="text" id="groupSub2Input" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="footerTextInput" class="block text-sm font-medium text-gray-700">ข้อความท้ายบัตร:</label>
+                        <input type="text" id="footerTextInput" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+                    </div>
+                    <!-- Background Options -->
+                    <div class="border-t pt-4 mt-4">
+                         <p class="text-sm font-medium text-gray-700 mb-2">ตัวเลือกพื้นหลัง</p>
+                         <label for="bgImageInput" class="w-full text-center bg-indigo-50 text-indigo-600 font-semibold py-2 px-4 rounded-lg hover:bg-indigo-100 cursor-pointer block transition-colors duration-300">
+                            อัปโหลดภาพพื้นหลัง
+                         </label>
+                         <input type="file" id="bgImageInput" accept="image/*" class="hidden">
+                         
+                         <div class="flex items-center justify-between mt-3">
+                             <p class="text-sm text-gray-500">หรือใช้พื้นหลังสี:</p>
+                             <button id="resetBgBtn" class="text-sm text-indigo-500 hover:underline font-semibold">กลับไปใช้พื้นหลังสี</button>
+                         </div>
 
-                <!-- Member Info -->
-                <div class="text-center text-white pb-5">
-                    <h2 id="cardName" class="text-4xl font-bold">ชื่อ-สกุล</h2>
-                    <p id="cardTitle" class="text-lg font-medium">ตำแหน่ง</p>
-                </div>
-
-                <!-- Footer -->
-                <footer class="bg-white/90 backdrop-blur-sm rounded-lg p-2 flex items-center justify-center -mx-2 -mb-2 shadow-inner">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[#1877F2] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.494v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.294h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.323-1.325z"/></svg>
-                    <p class="text-xs text-gray-700 font-semibold">กลุ่มคาราวานโรงเรียนยิ้ม (สมุทรปราการ)</p>
-                </footer>
+                        <div class="flex items-center space-x-4 mt-2">
+                            <input type="color" id="bgColor1" value="#0077c8" class="p-1 h-10 w-10 block bg-white border border-gray-200 cursor-pointer rounded-lg">
+                            <input type="color" id="bgColor2" value="#fecb00" class="p-1 h-10 w-10 block bg-white border border-gray-200 cursor-pointer rounded-lg">
+                            <input type="color" id="bgColor3" value="#005a9e" class="p-1 h-10 w-10 block bg-white border border-gray-200 cursor-pointer rounded-lg">
+                        </div>
+                    </div>
+                 </div>
+                 <button id="closeSettingsBtn2" class="mt-6 w-full bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">ปิด</button>
             </div>
         </div>
     </div>
+
 
     <script>
+        // --- Element Declarations ---
         const nameInput = document.getElementById('nameInput');
-        const titleInput = document.getElementById('titleInput');
+        const positionInput = document.getElementById('positionInput');
         const imageInput = document.getElementById('imageInput');
         const downloadBtn = document.getElementById('downloadBtn');
-
+        const guideBtn = document.getElementById('guideBtn');
+        const settingsBtn = document.getElementById('settingsBtn');
+        
+        // Card elements
         const cardName = document.getElementById('cardName');
-        const cardTitle = document.getElementById('cardTitle');
+        const cardPosition = document.getElementById('cardPosition');
         const profileImage = document.getElementById('profileImage');
         const cardContainer = document.getElementById('membership-card-container');
+        const groupName = document.getElementById('groupName');
+        const groupSub1 = document.getElementById('groupSub1');
+        const groupSub2 = document.getElementById('groupSub2');
+        const cardBgImage = document.getElementById('cardBgImage');
+        const bgShape1 = document.getElementById('bgShape1');
+        const bgShape2 = document.getElementById('bgShape2');
+        const bgShape3 = document.getElementById('bgShape3');
+        const memberInfo = document.getElementById('memberInfo');
+        const footerText = document.getElementById('footerText');
+        
+        // Guide Modal elements
+        const guideModal = document.getElementById('guideModal');
+        const closeGuideBtn = document.getElementById('closeGuideBtn');
 
-        // Update card name in real-time
+        // Settings Modal elements
+        const settingsModal = document.getElementById('settingsModal');
+        const passwordSection = document.getElementById('passwordSection');
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordError = document.getElementById('passwordError');
+        const submitPasswordBtn = document.getElementById('submitPasswordBtn');
+        const settingsFormSection = document.getElementById('settingsFormSection');
+        const closeSettingsBtn1 = document.getElementById('closeSettingsBtn1');
+        const closeSettingsBtn2 = document.getElementById('closeSettingsBtn2');
+        const groupNameInput = document.getElementById('groupNameInput');
+        const groupSub1Input = document.getElementById('groupSub1Input');
+        const groupSub2Input = document.getElementById('groupSub2Input');
+        const footerTextInput = document.getElementById('footerTextInput');
+        const bgColor1 = document.getElementById('bgColor1');
+        const bgColor2 = document.getElementById('bgColor2');
+        const bgColor3 = document.getElementById('bgColor3');
+        const bgImageInput = document.getElementById('bgImageInput');
+        const resetBgBtn = document.getElementById('resetBgBtn');
+
+        // --- Functions ---
+        const openModal = (modal) => {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+        };
+
+        const closeModal = (modal) => {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        };
+
+        const saveSettings = () => {
+            const settings = {
+                groupName: groupName.textContent,
+                groupSub1: groupSub1.textContent,
+                groupSub2: groupSub2.textContent,
+                footerText: footerText.textContent,
+                bgColor1: bgColor1.value,
+                bgColor2: bgColor2.value,
+                bgColor3: bgColor3.value,
+                bgImage: cardBgImage.classList.contains('hidden') ? null : cardBgImage.src
+            };
+            localStorage.setItem('membershipCardSettings', JSON.stringify(settings));
+        };
+
+        const loadSettings = () => {
+            const savedSettings = localStorage.getItem('membershipCardSettings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+
+                groupName.textContent = settings.groupName || 'กลุ่มคาราวาน';
+                groupSub1.textContent = settings.groupSub1 || 'โรงเรียนยิ้ม สมุทรปราการ';
+                groupSub2.textContent = settings.groupSub2 || 'Smile School Caravan';
+                footerText.textContent = settings.footerText || 'กลุ่มคาราวานโรงเรียนยิ้ม (สมุทรปราการ)';
+                
+                bgColor1.value = settings.bgColor1 || '#0077c8';
+                bgColor2.value = settings.bgColor2 || '#fecb00';
+                bgColor3.value = settings.bgColor3 || '#005a9e';
+                bgShape1.style.backgroundColor = bgColor1.value;
+                bgShape2.style.backgroundColor = bgColor2.value;
+                bgShape3.style.backgroundColor = bgColor3.value;
+
+                if (settings.bgImage) {
+                    setBgImageMode(settings.bgImage);
+                } else {
+                    setBgColorMode();
+                }
+            }
+        };
+        
+        const setBgColorMode = () => {
+            cardBgImage.src = '';
+            cardBgImage.classList.add('hidden');
+            bgShape1.classList.remove('hidden');
+            bgShape2.classList.remove('hidden');
+            bgShape3.classList.remove('hidden');
+            memberInfo.classList.add('text-white');
+            memberInfo.classList.remove('text-gray-800');
+        };
+        
+        const setBgImageMode = (imageSrc) => {
+            cardBgImage.src = imageSrc;
+            cardBgImage.classList.remove('hidden');
+            bgShape1.classList.add('hidden');
+            bgShape2.classList.add('hidden');
+            bgShape3.classList.add('hidden');
+            memberInfo.classList.remove('text-white');
+            memberInfo.classList.add('text-gray-800');
+        };
+
+        // --- Event Listeners ---
         nameInput.addEventListener('keyup', (e) => {
             cardName.textContent = e.target.value || 'ชื่อ-สกุล';
         });
 
-        // Update card title in real-time
-        titleInput.addEventListener('keyup', (e) => {
-            cardTitle.textContent = e.target.value || 'ตำแหน่ง';
+        positionInput.addEventListener('keyup', (e) => {
+            cardPosition.textContent = e.target.value || 'ตำแหน่ง';
         });
 
-        // Update profile picture on file selection
         imageInput.addEventListener('change', (e) => {
             if (e.target.files && e.target.files[0]) {
                 const reader = new FileReader();
@@ -124,24 +325,95 @@
             }
         });
 
-        // Download card as a PNG image
         downloadBtn.addEventListener('click', () => {
-            // Use html2canvas to capture the card element
-            html2canvas(cardContainer, { 
-                useCORS: true, // This can help with loading external images
-                scale: 2 // Increase scale for better resolution
-            }).then(canvas => {
-                // Create a link element to trigger the download
+            html2canvas(cardContainer, { useCORS: true, scale: 2 }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `membership-card-${nameInput.value || 'member'}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             });
         });
-    </script>
 
+        // Guide Modal Logic
+        guideBtn.addEventListener('click', () => openModal(guideModal));
+        closeGuideBtn.addEventListener('click', () => closeModal(guideModal));
+        guideModal.addEventListener('click', (e) => {
+            if (e.target === guideModal) closeModal(guideModal);
+        });
+
+        // Settings Modal Logic
+        settingsBtn.addEventListener('click', () => {
+            passwordInput.value = '';
+            passwordError.classList.add('hidden');
+            passwordSection.classList.remove('hidden');
+            settingsFormSection.classList.add('hidden');
+            openModal(settingsModal);
+        });
+        
+        closeSettingsBtn1.addEventListener('click', () => closeModal(settingsModal));
+        closeSettingsBtn2.addEventListener('click', () => closeModal(settingsModal));
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) closeModal(settingsModal);
+        });
+
+        submitPasswordBtn.addEventListener('click', () => {
+            if (passwordInput.value === '1234') {
+                passwordSection.classList.add('hidden');
+                settingsFormSection.classList.remove('hidden');
+                groupNameInput.value = groupName.textContent;
+                groupSub1Input.value = groupSub1.textContent;
+                groupSub2Input.value = groupSub2.textContent;
+                footerTextInput.value = footerText.textContent;
+            } else {
+                passwordError.classList.remove('hidden');
+            }
+        });
+
+        // Settings Form Real-time Update
+        groupNameInput.addEventListener('keyup', (e) => {
+            groupName.textContent = e.target.value || 'ชื่อกลุ่ม';
+            saveSettings();
+        });
+
+        groupSub1Input.addEventListener('keyup', (e) => {
+            groupSub1.textContent = e.target.value || 'บรรทัดที่ 2';
+            saveSettings();
+        });
+
+        groupSub2Input.addEventListener('keyup', (e) => {
+            groupSub2.textContent = e.target.value || 'บรรทัดที่ 3';
+            saveSettings();
+        });
+
+        footerTextInput.addEventListener('keyup', (e) => {
+            footerText.textContent = e.target.value || 'ข้อความท้ายบัตร';
+            saveSettings();
+        });
+
+        bgColor1.addEventListener('input', (e) => { bgShape1.style.backgroundColor = e.target.value; saveSettings(); });
+        bgColor2.addEventListener('input', (e) => { bgShape2.style.backgroundColor = e.target.value; saveSettings(); });
+        bgColor3.addEventListener('input', (e) => { bgShape3.style.backgroundColor = e.target.value; saveSettings(); });
+        
+        bgImageInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    setBgImageMode(event.target.result);
+                    saveSettings();
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+        
+        resetBgBtn.addEventListener('click', () => {
+            setBgColorMode();
+            saveSettings();
+        });
+
+        // Initial load of settings
+        loadSettings();
+
+    </script>
 </body>
 </html>
-
-
 
